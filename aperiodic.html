@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<table border="0">
+<tr>
+<td><canvas id="canvas" width="600" height="600"></canvas></td>
+<td>
+Size:
+<select id="size" onchange="update()">
+  <option value="20">20</option>
+  <option value="50">50</option>
+  <option value="100" selected="selected">100</option>
+  <option value="300">300</option>
+  <option value="600">600</option>
+</select><br/>
+
+<table border="0">
+<tr>
+<td><input type="checkbox" id="horiz" onclick="update()">Horizontal</td>
+<td><input type="text" id="hshift" value="0" oninput="update()"></td>
+</tr>
+<tr>
+<td><input type="checkbox" id="vert" onclick="update()">Vertical</td>
+<td><input type="text" id="vshift" value="0" oninput="update()"></td>
+</tr>
+<tr>
+<td><input type="checkbox" id="pos" onclick="update()">Positive Diagonal</td>
+<td><input type="text" id="pshift" value="0" oninput="update()"></td>
+</tr>
+<tr>
+<td><input type="checkbox" id="neg" onclick="update()">Negative Diagonal</td>
+<td><input type="text" id="nshift" value="0" oninput="update()"></td>
+</tr>
+</table>
+
+<input type="checkbox" id="convert" onclick="update()">Convert<br/>
+
+Color 0:
+<select id="color0" onchange="update()">
+  <option value="#000000" selected="selected">Black</option>
+  <option value="#ffffff">White</option>
+  <option value="#ff0000">Red</option>
+  <option value="#00ff00">Green</option>
+  <option value="#0000ff">Blue</option>
+</select><br/>
+
+Color 1:
+<select id="color1" onchange="update()">
+  <option value="#000000" selected="selected">Black</option>
+  <option value="#ffffff">White</option>
+  <option value="#ff0000">Red</option>
+  <option value="#00ff00">Green</option>
+  <option value="#0000ff">Blue</option>
+</select><br/>
+
+Color 2:
+<select id="color2" onchange="update()">
+  <option value="#000000" selected="selected">Black</option>
+  <option value="#ffffff">White</option>
+  <option value="#ff0000">Red</option>
+  <option value="#00ff00">Green</option>
+  <option value="#0000ff">Blue</option>
+</select><br/>
+
+Color 3:
+<select id="color3" onchange="update()">
+  <option value="#000000" selected="selected">Black</option>
+  <option value="#ffffff">White</option>
+  <option value="#ff0000">Red</option>
+  <option value="#00ff00">Green</option>
+  <option value="#0000ff">Blue</option>
+</select><br/>
+
+Color 4:
+<select id="color4" onchange="update()">
+  <option value="#000000" selected="selected">Black</option>
+  <option value="#ffffff">White</option>
+  <option value="#ff0000">Red</option>
+  <option value="#00ff00">Green</option>
+  <option value="#0000ff">Blue</option>
+</select><br/>
+
+<button onclick="randomize()">Randomize</button>
+
+</td>
+</tr>
+</table>
+
+<script>
+function update()
+{
+	var size = document.getElementById("size").value;
+	var horiz = document.getElementById("horiz").checked;
+	var vert = document.getElementById("vert").checked;
+	var pos = document.getElementById("pos").checked;
+	var neg = document.getElementById("neg").checked;
+	var colors = [
+		document.getElementById("color0").value,
+		document.getElementById("color1").value,
+		document.getElementById("color2").value,
+		document.getElementById("color3").value,
+		document.getElementById("color4").value];
+	var hshift = Number(document.getElementById("hshift").value);
+	var vshift = Number(document.getElementById("vshift").value);
+	var pshift = Number(document.getElementById("pshift").value);
+	var nshift = Number(document.getElementById("nshift").value);
+	var conv = document.getElementById("convert").checked;
+
+	var scale = 600 / size;
+	for (var x = 0; x < size; x++)
+	{
+		for (var y = 0; y < size; y++)
+		{
+			var count = 0;
+			if (horiz && onAt(y + hshift, conv)) count++;
+			if (vert && onAt(x + vshift, conv)) count++;
+			if (pos && onAt(x + y + pshift, conv)) count++;
+			if (neg && onAt(x - y + nshift, conv)) count++;
+			
+			ctx.fillStyle = colors[count];
+			ctx.fillRect(x * scale, y * scale, scale, scale);
+		}
+	}
+}
+
+function randomize()
+{
+	//document.getElementById("horiz").checked = Math.random() < 0.5;
+	//document.getElementById("vert").checked = Math.random() < 0.5;
+	//document.getElementById("pos").checked = Math.random() < 0.5;
+	//document.getElementById("neg").checked = Math.random() < 0.5;
+	
+	var colors = ["#000000", "#ffffff"];//, "#ff0000", "#00ff00", "#0000ff"];
+	
+	document.getElementById("color0").value = colors[Math.floor(Math.random() * colors.length)];
+	document.getElementById("color1").value = colors[Math.floor(Math.random() * colors.length)];
+	document.getElementById("color2").value = colors[Math.floor(Math.random() * colors.length)];
+	document.getElementById("color3").value = colors[Math.floor(Math.random() * colors.length)];
+	document.getElementById("color4").value = colors[Math.floor(Math.random() * colors.length)];
+
+	document.getElementById("hshift").value = Math.floor(Math.random() * 89);
+	document.getElementById("vshift").value = Math.floor(Math.random() * 89);
+	document.getElementById("pshift").value = Math.floor(Math.random() * 89);
+	document.getElementById("nshift").value = Math.floor(Math.random() * 89);
+
+	document.getElementById("convert").checked = Math.random() < 0.5;
+
+	update();
+}
+
+function onAt(pos, conv)
+{
+	if (conv)
+		return convert.charAt(1200 + pos) == "1";
+	else
+		return master.charAt(1200 + pos) == "1";
+}
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+var prev = "0";
+var master = "1";
+while (master.length < 2400)
+{
+	var temp = master;
+	master = prev + master;
+	prev = temp;
+}
+
+var convert = "";
+var i = 0;
+while (i < master.length)
+{
+	if (master.charAt(i) == "0")
+	{
+		convert += "00";
+		i += 2;
+	}
+	else
+	{
+		convert += "1";
+		i++;
+	}
+}
+
+randomize();
+//update();
+
+</script>
+
+</body>
+</html>
