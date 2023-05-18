@@ -16,6 +16,8 @@ Size:
   <option value="600">600</option>
 </select><br/>
 
+<input type="checkbox" id="grid" onclick="update()">Grid Lines
+
 <table border="0">
 <tr><td>first:</td><td><input type="text" id="first" value="0" oninput="update()"></td></tr>
 <tr><td>second:</td><td><input type="text" id="second" value="1" oninput="update()"></td></tr>
@@ -245,6 +247,7 @@ function update()
 	var nrt3shift = Number(document.getElementById("nrt3shift").value);
 	var first = document.getElementById("first").value;
 	var second = document.getElementById("second").value;
+	var grid = document.getElementById("grid").checked;
 
 	if (first.length == 0 || second.length == 0)
 		return;
@@ -267,6 +270,7 @@ function update()
 	
 	var freqs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	
+	ctx.strokeStyle = "#777777";
 	for (var x = 0; x < size; x++)
 	{
 		for (var y = 0; y < size; y++)
@@ -286,10 +290,13 @@ function update()
 			ctx.fillStyle = colors[count];
 			ctx.fillRect(x * scale, y * scale, scale, scale);
 			
+			if (grid)
+				ctx.strokeRect(x * scale, y * scale, scale, scale);
+			
 			freqs[count]++;
 		}
 	}
-	
+
 	for (var i = 0; i < 7; i++)
 		document.getElementById("freq" + i).innerHTML = (Math.round(1000 * freqs[i] / size / size) / 10) + "%";
 }
