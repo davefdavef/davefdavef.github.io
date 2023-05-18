@@ -2,7 +2,6 @@
 <html>
 <body>
 
-
 <table border="0">
 <tr>
 <td><canvas id="canvas" width="600" height="600"></canvas></td>
@@ -12,30 +11,98 @@ Size:
   <option value="20">20</option>
   <option value="50">50</option>
   <option value="100" selected="selected">100</option>
+  <option value="200">200</option>
   <option value="300">300</option>
   <option value="600">600</option>
 </select><br/>
 
 <table border="0">
+<tr><td>first:</td><td><input type="text" id="first" value="0" oninput="update()"></td></tr>
+<tr><td>second:</td><td><input type="text" id="second" value="1" oninput="update()"></td></tr>
+</table>
+
+<table border="0">
 <tr>
 <td><input type="checkbox" id="horiz" onclick="update()">Horizontal</td>
-<td><input type="text" id="hshift" value="0" oninput="update()"></td>
+<td>
+<button onclick="changeShift('hshift', -1)">-</button>
+<input type="text" id="hshift" value="0" oninput="update()">
+<button onclick="changeShift('hshift', 1)">+</button>
+</td>
 </tr>
 <tr>
 <td><input type="checkbox" id="vert" onclick="update()">Vertical</td>
-<td><input type="text" id="vshift" value="0" oninput="update()"></td>
+<td>
+<button onclick="changeShift('vshift', -1)">-</button>
+<input type="text" id="vshift" value="0" oninput="update()">
+<button onclick="changeShift('vshift', 1)">+</button>
+</td>
 </tr>
 <tr>
-<td><input type="checkbox" id="pos" onclick="update()">Positive Diagonal</td>
-<td><input type="text" id="pshift" value="0" oninput="update()"></td>
+<td><input type="checkbox" id="pos1" onclick="update()">+45 Diagonal</td>
+<td>
+<button onclick="changeShift('p1shift', -1)">-</button>
+<input type="text" id="p1shift" value="0" oninput="update()">
+<button onclick="changeShift('p1shift', 1)">+</button>
+</td>
 </tr>
 <tr>
-<td><input type="checkbox" id="neg" onclick="update()">Negative Diagonal</td>
-<td><input type="text" id="nshift" value="0" oninput="update()"></td>
+<td><input type="checkbox" id="neg1" onclick="update()">-45 Diagonal</td>
+<td>
+<button onclick="changeShift('n1shift', -1)">-</button>
+<input type="text" id="n1shift" value="0" oninput="update()">
+<button onclick="changeShift('n1shift', 1)">+</button>
+</td>
+</tr>
+<tr>
+<td><input type="checkbox" id="posrt3" onclick="update()">+60 Diagonal</td>
+<td>
+<button onclick="changeShift('prt3shift', -1)">-</button>
+<input type="text" id="prt3shift" value="0" oninput="update()">
+<button onclick="changeShift('prt3shift', 1)">+</button>
+</td>
+</tr>
+<tr>
+<td><input type="checkbox" id="negrt3" onclick="update()">-60 Diagonal</td>
+<td>
+<button onclick="changeShift('nrt3shift', -1)">-</button>
+<input type="text" id="nrt3shift" value="0" oninput="update()">
+<button onclick="changeShift('nrt3shift', 1)">+</button>
+</td>
+</tr>
+<tr>
+<td><input type="checkbox" id="neg2" onclick="update()">-72 Diagonal</td>
+<td>
+<button onclick="changeShift('n2shift', -1)">-</button>
+<input type="text" id="n2shift" value="0" oninput="update()">
+<button onclick="changeShift('n2shift', 1)">+</button>
+</td>
+</tr>
+<tr>
+<td><input type="checkbox" id="negh" onclick="update()">-36 Diagonal</td>
+<td>
+<button onclick="changeShift('nhshift', -1)">-</button>
+<input type="text" id="nhshift" value="0" oninput="update()">
+<button onclick="changeShift('nhshift', 1)">+</button>
+</td>
+</tr>
+<tr>
+<td><input type="checkbox" id="posh" onclick="update()">+36 Diagonal</td>
+<td>
+<button onclick="changeShift('phshift', -1)">-</button>
+<input type="text" id="phshift" value="0" oninput="update()">
+<button onclick="changeShift('phshift', 1)">+</button>
+</td>
+</tr>
+<tr>
+<td><input type="checkbox" id="pos2" onclick="update()">+72 Diagonal</td>
+<td>
+<button onclick="changeShift('p2shift', -1)">-</button>
+<input type="text" id="p2shift" value="0" oninput="update()">
+<button onclick="changeShift('p2shift', 1)">+</button>
+</td>
 </tr>
 </table>
-
-<input type="checkbox" id="convert" onclick="update()">Convert<br/>
 
 Color 0:
 <select id="color0" onchange="update()">
@@ -44,7 +111,11 @@ Color 0:
   <option value="#ff0000">Red</option>
   <option value="#00ff00">Green</option>
   <option value="#0000ff">Blue</option>
-</select><br/>
+  <option value="#ffff00">Yellow</option>
+  <option value="#ff00ff">Magenta</option>
+  <option value="#00ffff">Cyan</option>
+</select>
+<span id="freq0"></span><br/>
 
 Color 1:
 <select id="color1" onchange="update()">
@@ -53,7 +124,11 @@ Color 1:
   <option value="#ff0000">Red</option>
   <option value="#00ff00">Green</option>
   <option value="#0000ff">Blue</option>
-</select><br/>
+  <option value="#ffff00">Yellow</option>
+  <option value="#ff00ff">Magenta</option>
+  <option value="#00ffff">Cyan</option>
+</select>
+<span id="freq1"></span><br/>
 
 Color 2:
 <select id="color2" onchange="update()">
@@ -62,7 +137,11 @@ Color 2:
   <option value="#ff0000">Red</option>
   <option value="#00ff00">Green</option>
   <option value="#0000ff">Blue</option>
-</select><br/>
+  <option value="#ffff00">Yellow</option>
+  <option value="#ff00ff">Magenta</option>
+  <option value="#00ffff">Cyan</option>
+</select>
+<span id="freq2"></span><br/>
 
 Color 3:
 <select id="color3" onchange="update()">
@@ -71,7 +150,11 @@ Color 3:
   <option value="#ff0000">Red</option>
   <option value="#00ff00">Green</option>
   <option value="#0000ff">Blue</option>
-</select><br/>
+  <option value="#ffff00">Yellow</option>
+  <option value="#ff00ff">Magenta</option>
+  <option value="#00ffff">Cyan</option>
+</select>
+<span id="freq3"></span><br/>
 
 Color 4:
 <select id="color4" onchange="update()">
@@ -80,6 +163,46 @@ Color 4:
   <option value="#ff0000">Red</option>
   <option value="#00ff00">Green</option>
   <option value="#0000ff">Blue</option>
+  <option value="#ffff00">Yellow</option>
+  <option value="#ff00ff">Magenta</option>
+  <option value="#00ffff">Cyan</option>
+</select>
+<span id="freq4"></span><br/>
+
+Color 5:
+<select id="color5" onchange="update()">
+  <option value="#000000" selected="selected">Black</option>
+  <option value="#ffffff">White</option>
+  <option value="#ff0000">Red</option>
+  <option value="#00ff00">Green</option>
+  <option value="#0000ff">Blue</option>
+  <option value="#ffff00">Yellow</option>
+  <option value="#ff00ff">Magenta</option>
+  <option value="#00ffff">Cyan</option>
+</select>
+<span id="freq5"></span><br/>
+
+Color 6:
+<select id="color6" onchange="update()">
+  <option value="#000000" selected="selected">Black</option>
+  <option value="#ffffff">White</option>
+  <option value="#ff0000">Red</option>
+  <option value="#00ff00">Green</option>
+  <option value="#0000ff">Blue</option>
+  <option value="#ffff00">Yellow</option>
+  <option value="#ff00ff">Magenta</option>
+  <option value="#00ffff">Cyan</option>
+</select>
+<span id="freq6"></span><br/>
+
+<input type="checkbox" id="randomwidth">Random Width<br/>
+
+<input type="checkbox" id="randomshift">Random Shift<br/>
+
+<select id="randomcolor">
+  <option value="0" selected="selected">Current Color</option>
+  <option value="1">Random Black/White</option>
+  <option value="2">Random Color</option>
 </select><br/>
 
 <button onclick="randomize()">Randomize</button>
@@ -94,100 +217,169 @@ function update()
 	var size = document.getElementById("size").value;
 	var horiz = document.getElementById("horiz").checked;
 	var vert = document.getElementById("vert").checked;
-	var pos = document.getElementById("pos").checked;
-	var neg = document.getElementById("neg").checked;
+	var pos1 = document.getElementById("pos1").checked;
+	var neg1 = document.getElementById("neg1").checked;
+	var neg2 = document.getElementById("neg2").checked;
+	var negh = document.getElementById("negh").checked;
+	var posh = document.getElementById("posh").checked;
+	var pos2 = document.getElementById("pos2").checked;
+	var posrt3 = document.getElementById("posrt3").checked;
+	var negrt3 = document.getElementById("negrt3").checked;
 	var colors = [
 		document.getElementById("color0").value,
 		document.getElementById("color1").value,
 		document.getElementById("color2").value,
 		document.getElementById("color3").value,
-		document.getElementById("color4").value];
+		document.getElementById("color4").value,
+		document.getElementById("color5").value,
+		document.getElementById("color6").value];
 	var hshift = Number(document.getElementById("hshift").value);
 	var vshift = Number(document.getElementById("vshift").value);
-	var pshift = Number(document.getElementById("pshift").value);
-	var nshift = Number(document.getElementById("nshift").value);
-	var conv = document.getElementById("convert").checked;
+	var p1shift = Number(document.getElementById("p1shift").value);
+	var n1shift = Number(document.getElementById("n1shift").value);
+	var n2shift = Number(document.getElementById("n2shift").value);
+	var nhshift = Number(document.getElementById("nhshift").value);
+	var phshift = Number(document.getElementById("phshift").value);
+	var p2shift = Number(document.getElementById("p2shift").value);
+	var prt3shift = Number(document.getElementById("prt3shift").value);
+	var nrt3shift = Number(document.getElementById("nrt3shift").value);
+	var first = document.getElementById("first").value;
+	var second = document.getElementById("second").value;
+
+	if (first.length == 0 || second.length == 0)
+		return;
+
+	var prev = first;
+	master = second;
+	while (master.length < 4800)
+	{
+		var temp = master;
+		master = prev + master;
+		prev = temp;
+	}
 
 	var scale = 600 / size;
+	
+	var steep = Math.tan(72 * Math.PI / 180);
+	var steepmag = Math.sqrt(steep * steep + 1);
+	var shallow = Math.tan(36 * Math.PI / 180);
+	var shallowmag = Math.sqrt(shallow * shallow + 1);
+	
+	var freqs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	
 	for (var x = 0; x < size; x++)
 	{
 		for (var y = 0; y < size; y++)
 		{
 			var count = 0;
-			if (horiz && onAt(y + hshift, conv)) count++;
-			if (vert && onAt(x + vshift, conv)) count++;
-			if (pos && onAt(x + y + pshift, conv)) count++;
-			if (neg && onAt(x - y + nshift, conv)) count++;
+			if (horiz && onAt(y + hshift)) count++;
+			if (vert && onAt(x + vshift)) count++;
+			if (pos1 && onAt((x + y) + p1shift)) count++;
+			if (neg1 && onAt((x - y) + n1shift)) count++;
+			if (neg2 && onAt((-steep * x + y) / steepmag + n2shift)) count++;
+			if (negh && onAt((-shallow * x + y) / shallowmag + nhshift)) count++;
+			if (posh && onAt((shallow * x + y) / shallowmag + phshift)) count++;
+			if (pos2 && onAt((steep * x + y) / steepmag + p2shift)) count++;
+			if (posrt3 && onAt((Math.sqrt(3) * x + y) / 2 + prt3shift)) count++;
+			if (negrt3 && onAt((-Math.sqrt(3) * x + y) / 2 + nrt3shift)) count++;
 			
 			ctx.fillStyle = colors[count];
 			ctx.fillRect(x * scale, y * scale, scale, scale);
+			
+			freqs[count]++;
 		}
 	}
+	
+	for (var i = 0; i < 7; i++)
+		document.getElementById("freq" + i).innerHTML = (Math.round(1000 * freqs[i] / size / size) / 10) + "%";
+}
+
+function randomColor(numColors)
+{
+	var colors = ["#000000", "#ffffff", "#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"];
+	
+	document.getElementById("color0").value = colors[Math.floor(Math.random() * numColors)];
+	document.getElementById("color1").value = colors[Math.floor(Math.random() * numColors)];
+	document.getElementById("color2").value = colors[Math.floor(Math.random() * numColors)];
+	document.getElementById("color3").value = colors[Math.floor(Math.random() * numColors)];
+	document.getElementById("color4").value = colors[Math.floor(Math.random() * numColors)];
+	document.getElementById("color5").value = colors[Math.floor(Math.random() * numColors)];
+	document.getElementById("color6").value = colors[Math.floor(Math.random() * numColors)];
+	update();
+}
+
+function randomShift()
+{
+	document.getElementById("hshift").value = Math.floor(Math.random() * 89);
+	document.getElementById("vshift").value = Math.floor(Math.random() * 89);
+	document.getElementById("p1shift").value = Math.floor(Math.random() * 89);
+	document.getElementById("n1shift").value = Math.floor(Math.random() * 89);
+	document.getElementById("n2shift").value = Math.floor(Math.random() * 89);
+	document.getElementById("nhshift").value = Math.floor(Math.random() * 89);
+	document.getElementById("phshift").value = Math.floor(Math.random() * 89);
+	document.getElementById("p2shift").value = Math.floor(Math.random() * 89);
+	document.getElementById("prt3shift").value = Math.floor(Math.random() * 89);
+	document.getElementById("nrt3shift").value = Math.floor(Math.random() * 89);
+}
+
+function randomWidth()
+{
+	var firstWidth = Math.floor(Math.pow(2, 5 * Math.random()));
+	var secondWidth = Math.floor(Math.pow(2, 5 * Math.random()));
+	var first = "";
+	var second = "";
+	while (first.length < firstWidth)
+		first += "0";
+	while (second.length < secondWidth)
+		second += "1";
+	document.getElementById("first").value = first;
+	document.getElementById("second").value = second;
+}
+
+function resetShifts()
+{
+	document.getElementById("hshift").value = 0;
+	document.getElementById("vshift").value = 0;
+	document.getElementById("p1shift").value = 0;
+	document.getElementById("n1shift").value = 0;
+	document.getElementById("n2shift").value = 0;
+	document.getElementById("nhshift").value = 0;
+	document.getElementById("phshift").value = 0;
+	document.getElementById("p2shift").value = 0;
+	document.getElementById("prt3shift").value = 0;
+	document.getElementById("nrt3shift").value = 0;
+}
+
+function onAt(pos)
+{
+	return master.charAt(1200 + Math.round(pos)) == "1";
+}
+
+function changeShift(id, delta)
+{
+	document.getElementById(id).value = Number(document.getElementById(id).value) + delta;
+	update();
 }
 
 function randomize()
 {
-	//document.getElementById("horiz").checked = Math.random() < 0.5;
-	//document.getElementById("vert").checked = Math.random() < 0.5;
-	//document.getElementById("pos").checked = Math.random() < 0.5;
-	//document.getElementById("neg").checked = Math.random() < 0.5;
-	
-	var colors = ["#000000", "#ffffff"];//, "#ff0000", "#00ff00", "#0000ff"];
-	
-	document.getElementById("color0").value = colors[Math.floor(Math.random() * colors.length)];
-	document.getElementById("color1").value = colors[Math.floor(Math.random() * colors.length)];
-	document.getElementById("color2").value = colors[Math.floor(Math.random() * colors.length)];
-	document.getElementById("color3").value = colors[Math.floor(Math.random() * colors.length)];
-	document.getElementById("color4").value = colors[Math.floor(Math.random() * colors.length)];
-
-	document.getElementById("hshift").value = Math.floor(Math.random() * 89);
-	document.getElementById("vshift").value = Math.floor(Math.random() * 89);
-	document.getElementById("pshift").value = Math.floor(Math.random() * 89);
-	document.getElementById("nshift").value = Math.floor(Math.random() * 89);
-
-	document.getElementById("convert").checked = Math.random() < 0.5;
-
+	if (document.getElementById("randomwidth").checked)
+		randomWidth();
+	if (document.getElementById("randomshift").checked)
+		randomShift();
+	var rc = document.getElementById("randomcolor").value;
+	if (rc == 1)
+		randomColor(2);
+	else if (rc == 2)
+		randomColor(8);
 	update();
-}
-
-function onAt(pos, conv)
-{
-	if (conv)
-		return convert.charAt(1200 + pos) == "1";
-	else
-		return master.charAt(1200 + pos) == "1";
 }
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
+var master;
 
-var prev = "0";
-var master = "1";
-while (master.length < 2400)
-{
-	var temp = master;
-	master = prev + master;
-	prev = temp;
-}
-
-var convert = "";
-var i = 0;
-while (i < master.length)
-{
-	if (master.charAt(i) == "0")
-	{
-		convert += "00";
-		i += 2;
-	}
-	else
-	{
-		convert += "1";
-		i++;
-	}
-}
-
-randomize();
-//update();
+randomColor(7);
 
 </script>
 
