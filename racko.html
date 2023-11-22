@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rack-O</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="600" height="600"></canvas>
+    <script>
+    	function drawClicked()
+    	{
+    		if (selected != 0)
+    			return;
+    		selected = 1;
+		    drawButton.innerHTML = deck.splice(Math.floor(Math.random() * deck.length), 1);
+		    discardButton.innerHTML = "";   			
+    	}
+    	
+    	function discardClicked()
+    	{
+    		if (selected != 0)
+    			return;
+    		selected = 2;
+    		drawButton.innerHTML = "";
+    	}
+    	
+    	function buttonClicked(index)
+    	{
+    		if (selected == 0)
+    			return;
+    		var card;
+    		if (selected == 1)
+    			card = drawButton.innerHTML;
+    		else
+    			card = discardButton.innerHTML;
+    		buttons[index].innerHTML = card;
+    		drawButton.innerHTML = "Draw";
+    		discardButton.innerHTML = deck.splice(Math.floor(Math.random() * deck.length), 1);
+    		selected = 0;
+    		turnLabel.innerHTML = parseInt(turnLabel.innerHTML) + 1;
+    	}
+    	
+    	function canvasClicked(event)
+    	{
+    		var x = event.pageX - canvas.offsetLeft - canvas.clientLeft;
+    		var y = event.pageY - canvas.offsetTop - canvas.clientTop;
+	    	ctx.fillStyle = "#007700";
+    		ctx.fillRect(0, 0, 600, 600);
+    		ctx.fillStyle = "#ffffff";
+    		ctx.font = "36px Arial";
+    		ctx.fillText(x + ", " + y, 100, 100);    		
+    	}
+    
+    	var deck = [];
+    	for (var rank = 1; rank <= 60; rank++)
+    		deck.push(rank);
+    	var rack = [];
+    	for (var i = 0; i < 10; i++)
+    		rack[i] = deck.splice(Math.floor(Math.random() * deck.length), 1);
+    	var discard = deck.splice(Math.floor(Math.random() * deck.length), 1);
+    	var selected = 0;  //0 = none, 1 = draw, 2 = discard
+    	
+    	var canvas = document.getElementById("canvas");
+    	var ctx = canvas.getContext("2d");
+    	ctx.fillStyle = "#007700";
+    	ctx.fillRect(0, 0, 600, 600);
+    	
+    	canvas.addEventListener('click', canvasClicked, false);
+    	
+    </script>
+  </body>
+</html>
